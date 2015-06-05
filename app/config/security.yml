@@ -1,0 +1,91 @@
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Gdev\UserBundle\Entity\User: sha512
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        main:
+            #entity: { class: Gdev\UserBundle\Entity\User, property: username }
+            id: fos_user.user_provider.username
+        openid_user_manager:
+            id: gdev_user.openid_user_manager # the name of the service
+
+        database:
+            entity: { class: GdevUserBundle:User, property: username }
+
+    # the main part of the security, where you can set up firewalls
+    # for specific sections of your app
+    firewalls:
+        main:
+            pattern:    ^/
+            fp_openid:
+                create_user_if_not_exists: false # so createUserFromIdentity method will be called
+                default_target_path: /
+                always_use_default_target_path: true
+                use_referer:        true
+                target_path_parameter: /
+               # provider: openid_user_manager # cf below
+                # previously we used 'contact/email' field. So we have to request it!
+                # Please note that all OpenID providers may not be able to provide all fields.
+                # check the desired provider documentation
+               # required_attributes:
+                   # - contact/email
+            logout:
+                path:       /isaac/logout
+                target:     /
+            anonymous:    true
+            provider:  main
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                default_target_path: /
+                always_use_default_target_path: true
+                use_referer:        true
+                target_path_parameter: /
+            logout:
+                path:       fos_user_security_logout
+                target:     /
+            remember_me:
+                key:        %secret% # %secret% est un paramètre de parameters.yml
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # the login page has to be accessible for everybody
+        # demo_login:
+        #     pattern:  ^/demo/secured/login$
+        #     security: false
+
+        # # secures part of the application
+        # demo_secured_area:
+        #     pattern:    ^/demo/secured/
+        #     # it's important to notice that in this case _demo_security_check and _demo_login
+        #     # are route names and that they are specified in the AcmeDemoBundle
+        #     form_login:
+        #         check_path: _demo_security_check
+        #         login_path: _demo_login
+        #     logout:
+        #         path:   _demo_logout
+        #         target: _demo
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    # with these settings you can restrict or allow access for different parts
+    # of your application based on roles, ip, host or methods
+    # http://symfony.com/doc/current/cookbook/security/access_control.html
+    access_control:
+        # { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login_openid$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secured_area, role: IS_AUTHENTICATED_OPENID }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+

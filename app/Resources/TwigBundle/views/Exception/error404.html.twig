@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Une erreur est survenue : {{ status_text }}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="css/bootstrap-timepicker.min.css" />
+
+    <!-- Custom CSS -->
+    <link href="css/portfolio-item.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block stylesheets %}
+    {# On charge le CSS de bootstrap depuis le site directement #}
+    <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/stylesheets/style.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap-switch.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+
+    {% endblock %}
+    {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <!-- jQuery -->
+    <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/js/bootstrap-switch.js') }}" type="text/javascript"></script>
+
+
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{ path('gdev_isaac_home') }}">My Own Rebirth</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav navbar-right">
+                <li {% if (app.request.attributes.get('_route')) == 'gdev_isaac_home' %}
+                class="active"
+                {% endif %}>
+                <a href="{{ path('gdev_isaac_home') }}">Accueil <span class="sr-only">(current)</span></a></li>
+
+
+                <li {% if (app.request.attributes.get('_route')) == 'gdev_seeAllSeeds' or (app.request.attributes.get('_route')) == 'gdev_viewSeed' or (app.request.attributes.get('_route')) == 'gdev_addSeeds' %}
+                class="active"
+                {% endif %}><a href="{{ path('gdev_seeAllSeeds') }}">Seeds</a></li>
+
+                 <li {% if (app.request.attributes.get('_route')) == 'gdev_seeAllDefy' or (app.request.attributes.get('_route')) == 'gdev_viewDefy' or (app.request.attributes.get('_route')) == 'gdev_addDefy' %}
+                class="active"
+                {% endif %}><a href="{{ path('gdev_seeAllDefy') }}">Defis</a></li>
+
+                <li {% if (app.request.attributes.get('_route')) == 'gdev_seeAllTwitch' or (app.request.attributes.get('_route')) == 'gdev_viewTwitch' or (app.request.attributes.get('_route')) == 'gdev_addTwitch' %}%}
+                class="active"
+                {% endif %}><a href="{{ path('gdev_seeAllTwitch') }}">Live</a></li>
+
+                <li {% if (app.request.attributes.get('_route')) == 'gdev_seeAllItem' %}
+                class="active"
+                {% endif %}><a href="{{ path('gdev_seeAllItem') }}">Items</a></li>
+
+
+          {#       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li {% if (app.request.attributes.get('_route')) == 'fos_user_profile_edit' %}
+                    class="active"
+                    {% endif %}><a href="{{ path('fos_user_profile_edit') }}">Mon Compte</a></li>
+                {% endif %} #}
+
+               {#  <li><a href="#">Se Connecter</a></li> #}
+                <li {% if (app.request.attributes.get('_route')) == 'gdev_contact' %}
+                class="active"
+                {% endif %}><a href="{{ path('gdev_contact') }}">Contact</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block body %}
+            <h1>I AM ERROR !</h1>
+            <img src='{{ asset('entrepot/') }}error.png' alt=''>
+            <h2>Cette page n'existe pas ! </h2>
+            <h3>Dirigez-vous vers une autre salle !</h3>
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <nav class="navbar-default">
+            <ul class="nav nav-pills nav-justified">
+                <li><a href="http://store.steampowered.com/app/250900/">Acheter TBOIR</a></li>
+                <li><a href="http://guillaumedev.com">© 2015 GuillaumeDev</a></li>
+                <li><a href='https://twitter.com/dev_gui'>Follow Me on Twitter</a>
+                <li><a href="{{ path('gdev_contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </footer>
+
+</body>
+</html>

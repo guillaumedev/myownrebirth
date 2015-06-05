@@ -1,0 +1,125 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+    Seeds - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+    <h1 hidden>Seeds</h1>
+<!-- Blog Post Content Column -->
+    <div class="col-lg-12">
+        <hr>
+        <!-- Date/Time -->
+        <p><i class="fa fa-clock-o"></i> Posté le {{ seed.date|date('Y-m-d') }} 
+
+            {% if owner %} 
+                <a href="{{ path('gdev_deleteSeed',{'id': seed.id}) }}" class="btn btn-danger pull-right">Supprimer</a> 
+            {% endif %}
+        </p>
+
+        <hr>
+        <div class="text-center">
+        <!-- Preview Image -->
+            <div class="col-md-12">
+                <h3>{{ seed.code }}</h3>
+                {{seed.description}}
+                <br/>
+            </div>
+        </div>
+    </div>
+
+    {% set number = 0 %}
+    {% for item in listItems %}
+        {% if number is divisible by(2) %}
+            <div class="col-sm-2 seedItem">
+                <p class="achievementName">{{ item.floor }}</p>
+                <br/>
+        {% endif %}
+                {# {{ dump(key.icon) }} #}
+                <a href="#">
+                    <img src="{{ asset('entrepot/objets/') }}{{item.getItem.getUrlImage }}" alt="">
+                </a>
+                <p class="achievementName">{{ item.getItem.name }}</p>
+
+                <div class="row text-center">
+                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#basicModal{{number}}">Plus d'infos</a>
+                </div>
+
+                <div class="modal fade" id="basicModal{{number}}" tabindex="-1" role="dialog" aria-labelledby="basicModal{{number}}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <img src="{{ asset('entrepot/objets/') }}{{item.getItem.getUrlImage }}" alt="">
+                                <h4 class="modal-title" id="myModalLabel">{{ item.getItem.name }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3>{{ item.getItem.description }}</h3>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% if number is divisible by(2) %}
+            <hr>
+        {% endif %}
+
+        {% if number is not divisible by(2) %}
+            </div>
+        {% endif %}
+        {% set number = number + 1 %}
+    {% endfor %}
+    <hr>
+
+    {% if authenticate %}
+    <div class="col-lg-12">
+        <br/>
+        <div class="well">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+            {# Génération du label. #}
+                {{ form_label(form.message, "Message :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+            {# Affichage des erreurs pour ce champ précis. #}
+                {{ form_errors(form.message) }}
+
+                <div class="col-sm-4">
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div>
+                {{form_widget(form.save, {'attr': {'class': 'btn btn-primary pull-righ'}} ) }}
+            </div>
+            {{ form_rest(form) }}
+
+            {# Fermeture de la balise <form> du formulaire HTML #}
+            {{ form_end(form) }}
+
+        </div>
+    {% endif %}
+
+        <!-- Posted Comments -->
+
+        {% for response in listSeedResponse %}
+            <div class="media comment">
+                <a class="pull-left" href="#"></a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ seed.code }}
+                    <small>{{ response.date.date }}</small>
+                    </h4>
+                    {{ response.message }}
+                </div>
+            </div>
+        {% endfor %}
+        <br/><br/>
+    </div>
+{% endblock %}

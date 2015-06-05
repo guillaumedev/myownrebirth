@@ -1,0 +1,67 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+  Defis - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+    <h1>Lives !</h1>
+    <div class="container text-center">
+        {% if authenticate %}
+        <a href='{{ path('gdev_addTwitch') }}'><i class="fa fa-plus-square fa-3x"></i></a>
+        {% endif %}
+
+        <div class="text-center col-lg-12">
+            <form id="form_recherche" action="{{ path('gdev_rechercher_twitch') }}" method="post">
+                <div class="form-group">
+
+                    {{ form_label(form.motcle, "Rechercher un live :", {'label_attr': {'class': 'sr-only'}}) }}
+
+                    {# Affichage des erreurs pour ce champ précis. #}
+                    {{ form_errors(form.motcle) }}
+
+                    <div class="text-center col-lg-4 col-md-offset-4">
+                        {{ form_widget(form.motcle, {'attr': {'class': 'form-control', 'autofocus':true, 'placeholder':'Rechercher un live'}}) }}
+                    </div>
+                </div>
+                    {{ form_rest(form) }}
+
+                {# Fermeture de la balise <form> du formulaire HTML #}
+                    {{ form_end(form) }}
+            </form>
+
+        </div>
+        <div class="loading">
+                <img src="{{ asset('entrepot/') }}loading.gif" alt="">
+            </div>
+    </div>
+
+        <br/>
+
+        <div id="resultats_recherche">
+            {% include 'GdevIsaacBundle:Twitch:allSearchTwitch.html.twig' with {'listTwitch' : listTwitch}  %}
+        </div>
+
+<script type="text/javascript">
+$(".loading").hide();
+$("#form_recherche").keyup(function(){
+    $(".loading").show();
+    var motcle = $("#acteurrecherche_motcle").val();
+    var DATA = 'motcle=' + motcle;
+    $.ajax({
+        type: "POST",
+        url: "{{ path('gdev_rechercher_twitch')}}",
+        data: DATA,
+        cache: false,
+        success: function(data){
+           $('#resultats_recherche').html(data);
+           $(".loading").hide();
+        }
+    });
+    return false;
+});
+</script>
+
+{% endblock %}

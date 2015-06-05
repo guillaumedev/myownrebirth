@@ -1,0 +1,3 @@
+services:
+    gdev_isaac.managetoken:
+        class: Gdev\IsaacBundle\ManageToken\GdevManageToken

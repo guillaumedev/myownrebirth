@@ -1,0 +1,143 @@
+gdev_isaac_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: GdevIsaacBundle:Default:index }
+
+gdev_isaac_home:
+    path:     /
+    defaults: { _controller: GdevIsaacBundle:Default:home }
+
+gdev_see_id:
+    path:     /seeId
+    defaults: { _controller: GdevIsaacBundle:Default:seeId }
+
+gdev_achievement:
+    path:     /achievement
+    defaults: { _controller: GdevIsaacBundle:Default:achievement }
+
+
+gdev_addSeeds:
+    path:     /addSeeds
+    defaults: { _controller: GdevIsaacBundle:Seeds:add }
+
+gdev_seeAllSeeds:
+    path:     /allSeeds
+    defaults: { _controller: GdevIsaacBundle:Seeds:allSeeds }
+
+gdev_viewSeed:
+    path:     /viewSeed/{id}
+    defaults: { _controller: GdevIsaacBundle:Seeds:viewSeed }
+
+gdev_deleteSeed:
+    path:     /deleteSeed/{id}
+    defaults: { _controller: GdevIsaacBundle:Seeds:deleteSeed }
+
+gdev_rechercher_seed:
+    pattern: /seed/rechercher
+    defaults: { _controller: GdevIsaacBundle:Seeds:rechercher }
+    requirements:
+        _method: POST
+
+
+
+gdev_seeAllItem:
+    path:     /allItems/
+    defaults: { _controller: GdevIsaacBundle:Default:seeItems }
+
+gdev_rechercher_item:
+    pattern: /item/rechercherItem
+    defaults: { _controller: GdevIsaacBundle:Default:rechercherItem }
+    requirements:
+        _method: POST
+
+
+
+gdev_addDefy:
+    path:     /addDefy/
+    defaults: { _controller: GdevIsaacBundle:Defy:addDefy }
+
+gdev_viewDefy:
+    path:     /viewDefy/{id}
+    defaults: { _controller: GdevIsaacBundle:Defy:viewDefy }
+
+gdev_deleteDefy:
+    path:     /deleteDefy/{id}
+    defaults: { _controller: GdevIsaacBundle:Defy:deleteDefy }
+
+gdev_seeAllDefy:
+    path:     /allDefy/
+    defaults: { _controller: GdevIsaacBundle:Defy:allDefy }
+
+gdev_rechercher_defy:
+    pattern: /defy/rechercher
+    defaults: { _controller: GdevIsaacBundle:Defy:rechercher }
+    requirements:
+        _method: POST
+
+
+gdev_detailItem:
+    path:     /detailItem/{id}
+    defaults: { _controller: GdevIsaacBundle:Item:detailItem }
+
+
+
+
+gdev_addTwitch:
+    path:     /addTwitch/
+    defaults: { _controller: GdevIsaacBundle:Twitch:addTwitch }
+
+gdev_viewTwitch:
+    path:     /viewTwitch/{id}
+    defaults: { _controller: GdevIsaacBundle:Twitch:viewTwitch }
+
+gdev_deleteTwitch:
+    path:     /deleteTwitch/{id}
+    defaults: { _controller: GdevIsaacBundle:Twitch:deleteTwitch }
+
+gdev_seeAllTwitch:
+    path:     /allTwitch/
+    defaults: { _controller: GdevIsaacBundle:Twitch:allTwitch }
+
+gdev_rechercher_twitch:
+    pattern: /twitch/rechercher
+    defaults: { _controller: GdevIsaacBundle:Twitch:rechercher }
+    requirements:
+        _method: POST
+
+
+
+gdev_launchTimer:
+    pattern: /launchTimer/
+    defaults: { _controller: GdevIsaacBundle:Twitch:launchTimer }
+    requirements:
+        _method:  POST|GET
+
+gdev_getDateLaunched:
+    pattern: /getDateLaunched/
+    defaults: { _controller: GdevIsaacBundle:Twitch:getDateLaunched }
+    requirements:
+        _method:  POST|GET
+
+gdev_contact:
+    path:     /contact/
+    defaults: { _controller: GdevIsaacBundle:Default:contact }
+
+
+gdev_registration:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /isaac/register
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

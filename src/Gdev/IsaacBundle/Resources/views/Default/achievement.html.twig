@@ -1,0 +1,102 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+  Achievements - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+	<h1>Succès</h1>
+
+    <div class="text-center">
+        {% if percentage is defined %}
+            <label class="affichageSucces">N'affichez que les succès manquants :</label>
+            <input type="checkbox" id='switch-state' class='sortAchievement' name="my-checkbox" checked>
+            <br/><br/>
+            {{ percentage }}%
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ percentage }}"
+              aria-valuemin="0" aria-valuemax="100" style="width:{{ percentage }}%">
+                    <span class="sr-only">{{ percentage }}% Complete</span>
+                </div>
+            </div>
+                {% if percentage == 100 %}
+                    Bravo vous êtes Platinum GOD !!
+                {% endif %}
+        {% endif %}
+        <input type='text' class='rechercher' placeholder='Rechercher un succès' autofocus>
+    </div>
+
+    <br/>
+
+    <div class="row achievements">
+
+        <div class="col-lg-12">
+            <h3 hidden class="page-header">Achievements</h3>
+        </div>
+
+
+        {% set number = 0 %}
+        {% for key in finalArray %}
+            <div class="col-sm-2 achievement {{key.class}} {{key.name}} itemAchievement">
+                {# {{ dump(key.icon) }} #}
+                <a href="#">
+                    <img class="img" src={{key.icon}} alt="">
+                </a>
+                <p class="achievementName">{{ key.name }}</p>
+
+                <div class="row text-center buttonBottom">
+                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#basicModal{{number}}">Plus d'infos</a>
+                </div>
+
+                <div class="modal fade" id="basicModal{{number}}" tabindex="-1" role="dialog" aria-labelledby="basicModal{{number}}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <img class="img" src={{key.icon}} alt="">
+                                <h4 class="modal-title" id="myModalLabel">{{ key.name }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3>{{ key.howto }}</h3>
+                                <h3>{{ key.description }}</h3>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% set number = number + 1 %}
+        {% endfor %}
+
+    </div>
+
+    <script>
+        $('.green').hide();
+        $("[name='my-checkbox']").bootstrapSwitch();
+
+        $('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+            if(state){
+                $('.green').hide();
+            } else {
+                $('.green').show();
+            }
+        });
+
+        $('.rechercher').keyup(function(){
+            var motcle = $(".rechercher").val();
+            $('.itemAchievement').each( function(i) {
+                var className = $(this).attr('class');
+                if (className.toLowerCase().match(motcle.toLowerCase())){
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,177 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+  Live - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+
+
+    <h1 hidden>Live</h1>
+    <!-- Blog Post Content Column -->
+    <div class="col-lg-12">
+        <hr>
+        <!-- Date/Time -->
+        <p><i class="fa fa-clock-o"></i> Posté le {{ twitch.dateDefy|date('Y-m-d') }} 
+        {% if authorize %}
+          <a href="{{ path('gdev_deleteTwitch',{'id': twitch.id}) }}" class="btn btn-danger pull-right">Supprimer</a>
+        {% endif %}
+        </p>
+
+        <hr>
+        <div class="text-center">
+        <!-- Preview Image -->
+            <div class="col-md-12">
+                <h3>{{ twitch.seed }}</h3>
+                <h4>
+                  <span class="col-md-4"><span class='pull-right'>{{twitch.firstPlayer }}</span></span> 
+                  <span class="col-md-4 VS">vs</span>
+                  <span class="col-md-4"><span class='pull-left'>{{twitch.secondPlayer }}</span></span></h4>
+
+            </div>
+            {% if authorize and not twitch.isStarted %}
+              <input type="button" class="launchTimer btn btn-info" value="GO">
+            {% endif %}
+            <span id="time">00:00:00</span>
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="iframe-responsive-wrapper">
+                <img class="iframe-ratio" src="data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7"/>
+             <iframe src="http://www.twitch.tv/{{twitch.firstPlayer}}/embed" frameborder="0" scrolling="no" height="auto" width="100%"></iframe><a href="http://www.twitch.tv/{{twitch.firstPlayer}}?tt_medium=live_embed&tt_content=text_link" style="padding:2px 0px 4px; display:block; width:345px; font-weight:normal; font-size:10px;text-decoration:underline;">Watch live video from {{twitch.firstPlayer}} on www.twitch.tv</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="iframe-responsive-wrapper">
+                <img class="iframe-ratio" src="data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7"/>
+                <iframe src="http://www.twitch.tv/{{twitch.secondPlayer }}/embed" frameborder="0" scrolling="no" height="auto" width="100%"></iframe><a href="http://www.twitch.tv/{{twitch.secondPlayer }}?tt_medium=live_embed&tt_content=text_link" style="padding:2px 0px 4px; display:block; width:345px; font-weight:normal; font-size:10px;text-decoration:underline;">Watch live video from {{twitch.secondPlayer }} on www.twitch.tv</a>
+            </div>
+        </div>
+    </div>
+
+    <hr></br>
+
+    <div class="text-center">
+      <a class="twitter-share-button" target="_blank"
+      href="https://twitter.com/intent/tweet?text=Defi%20entre%20{{twitch.firstPlayer}}%20et%20{{twitch.secondPlayer}}%20sur%20TBOIR%20ici%20:%20www.myownrebirth.ovh{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}">
+        <h4><i class="fa fa-fw fa-twitter ">
+        </i>Partager</h4>
+        </a>
+        <a class="facebook-share-button" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=teztz"><h4><i class="fa fa-fw fa-facebook ">
+        </i>Partager</h4></a>
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript">
+  var isLaunched = false;
+  getStateTimer();
+
+function getStateTimer(){
+  var date_now ="";
+  var id = {{ twitch.id }};
+  var DATA = 'id=' + id;
+  //console.log({{ path('gdev_launchTimer')}});
+  $.ajax({
+      type: "POST",
+      url: "{{ path('gdev_getDateLaunched')}}",
+      data: DATA,
+      cache: false,
+      success: function(data){
+        date_now = data;
+        if(date_now != 'null'){
+          convertToDate(date_now);
+        }
+
+      }
+  });
+}
+
+function convertToDate(date_now){
+
+  var t = date_now.split(/[- :]/);
+  // Apply each element to the Date function
+  var date_now = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+
+  var date_future = new Date();
+  console.log(date_future);
+  // get total seconds between the times
+  var delta = Math.abs(date_future - date_now) / 1000;
+
+  // calculate (and subtract) whole days
+  var days = Math.floor(delta / 86400);
+  delta -= days * 86400;
+
+  // calculate (and subtract) whole hours
+  var hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
+
+  // calculate (and subtract) whole minutes
+  var minutes = Math.floor(delta / 60) % 60;
+  delta -= minutes * 60;
+
+  // what's left is seconds
+  var seconds = delta % 60;  // in theory the modulus is not required
+  launchTimer(hours, minutes, seconds);
+}
+
+$('.launchTimer').click(function(){
+  if(!isLaunched){
+    isLaunched = true;
+    var id = {{ twitch.id }};
+    var DATA = 'id=' + id;
+    //console.log({{ path('gdev_launchTimer')}});
+    $.ajax({
+        type: "POST",
+        url: "{{ path('gdev_launchTimer')}}",
+        data: DATA,
+        cache: false,
+        success: function(data){
+         launchTimer(0,0,0);
+          $('.launchTimer').hide();
+        }
+    });
+    return true;
+  }
+});
+
+function launchTimer(hours, minutes, seconds){
+    var time = hours+":"+minutes+":"+seconds;
+    isLaunched = true;
+    function changeTime() {
+        var timeSplited = time.split(':');
+        var hour = timeSplited[0];
+        var minute = timeSplited[1];
+        var second = timeSplited[2];
+        second++;
+        if(second==60) {
+            second = '0';
+            minute++;
+            if(minute == 60){
+                minute = '0';
+                hour++;
+            }
+        }
+      hour = '0'+hour;
+      hour = hour.toString().substr(-2, 2);
+      minute = '0'+minute;
+      minute = minute.toString().substr(-2, 2);
+      second = '0'+second;
+      second = second.toString().substr(-2, 2);
+        time = hour+':'+minute+':'+second;
+        document.getElementById('time').innerHTML = time;
+    }
+    var instance = self.setInterval(changeTime ,1000);
+}
+</script>
+
+
+{% endblock %}

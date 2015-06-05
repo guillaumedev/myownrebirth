@@ -1,0 +1,18 @@
+<ul>
+    {% for defy in listDefy %}
+        <div class="col-md-3 col-sm-6">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <span class="fa-stack fa-5x">
+                        <img class='fa fa-circle fa-stack-2x text-primary'src='{{ asset('') }}{{ defy.getWebPath }}' alt=''>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <h4>{{ defy.seed }}</h4>
+                    <p>{{ defy.record }}</p>
+                    <a href="{{ path('gdev_viewDefy',{'id': defy.id}) }}" class="btn btn-primary">Voir</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</ul>

@@ -1,0 +1,102 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+  Defy - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+    <h1 hidden>Defis</h1>
+    <div class="row">
+        <!-- Blog Post Content Column -->
+        <div class="container">
+            <div class="col-lg-12">
+                    <hr>
+
+                    <!-- Date/Time -->
+                    <p><i class="fa fa-clock-o"></i> Posté le {{ defy.date|date('Y-m-d') }} 
+
+                    {% if owner %}
+                        <a href="{{ path('gdev_deleteDefy',{'id': defy.id}) }}" class="btn btn-danger pull-right">Supprimer</a>
+                    {% endif %}
+                </p>
+
+                <hr>
+                <div class="text-center">
+                <!-- Preview Image -->
+                    <div class="col-md-6">
+                        <img class="img-responsive" src="{{ asset('') }}{{ generalPath }}" alt="" width='100'>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead">Score : {{ defy.record }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Comments -->
+
+        <!-- Comments Form -->
+        {% if authenticate %}
+            <div class="well">
+                <h4>Donnez votre temps :</h4>
+                <div class="well">
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+                  {# Les erreurs générales du formulaire. #}
+                    {{ form_errors(form) }}
+
+                    <div class="form-group">
+                        {{ form_label(form.record, "Record : ", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                        {{ form_errors(form.record) }}
+                        <div class="col-sm-4">
+                            {{ form_widget(form.record, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div>
+                            {{form_widget(form.file, {'attr': {'class': ''}} ) }}
+                        </div>
+                        <div>
+                            {{form_widget(form.save, {'attr': {'class': 'btn btn-primary'}} ) }}
+                        </div>
+                    </div>
+
+
+                    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+
+                    {# Génération automatique des champs pas encore écrits.
+                       Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+                       et tous les champs cachés (type « hidden »). #}
+                    {{ form_rest(form) }}
+
+                    {# Fermeture de la balise <form> du formulaire HTML #}
+                    {{ form_end(form) }}
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <!-- Posted Comments -->
+
+        {% for response in listDefyResponse %}
+            <div class="media comment">
+                <a class="pull-left" href="#">
+                    <img class='media-object' src="{{ asset('') }}/uploads/documents/{{ response.urlImage }}" alt="" width='100'>
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ defy.seed }}
+                    <small>{{ response.date.date }}</small>
+                    </h4>
+                    {{ response.record }}
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <br/><br/>
+
+
+{% endblock %}

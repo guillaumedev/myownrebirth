@@ -1,0 +1,93 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="text-center">
+                    <h3>S'inscrire</h3>
+                </div>
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            {# Les erreurs générales du formulaire. #}
+                {{ form_errors(form) }}
+
+                <div class="form-group">
+              {# Génération du label. #}
+                    {{ form_label(form.username, "Username :", {'label_attr': {'class': 'sr-only'}}) }}
+
+              {# Affichage des erreurs pour ce champ précis. #}
+                    {{ form_errors(form.username) }}
+
+                    <div>
+                {# Génération de l'input. #}
+                        {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder':'Nom d\'utilisateur', 'autofocus':true}}) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  {# Génération du label. #}
+                    {{ form_label(form.email, "Mail :", {'label_attr': {'class': 'sr-only'}}) }}
+
+                  {# Affichage des erreurs pour ce champ précis. #}
+                    {{ form_errors(form.email) }}
+
+                    <div>
+                    {# Génération de l'input. #}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder':'Email'}}) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  {# Génération du label. #}
+                    {{ form_label(form.plainPassword.first, "Password :", {'label_attr': {'class': 'sr-only'}}) }}
+
+                  {# Affichage des erreurs pour ce champ précis. #}
+                    {{ form_errors(form.plainPassword.first) }}
+
+                    <div>
+                    {# Génération de l'input. #}
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'Mot de passe'}}) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  {# Génération du label. #}
+                    {{ form_label(form.plainPassword.second, "Password :", {'label_attr': {'class': 'sr-only'}}) }}
+
+                  {# Affichage des erreurs pour ce champ précis. #}
+                    {{ form_errors(form.plainPassword.second) }}
+
+                    <div>
+                    {# Génération de l'input. #}
+                        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'Verification du mot de passe'}}) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  {# Génération du label. #}
+                    {{ form_label(form.steamId, "Steam Id :", {'label_attr': {'class': 'sr-only'}}) }}
+
+                  {# Affichage des erreurs pour ce champ précis. #}
+                    {{ form_errors(form.steamId) }}
+
+                    <div>
+                    {# Génération de l'input. #}
+                        {{ form_widget(form.steamId, {'attr': {'class': 'form-control', 'placeholder':'Steam Id'}}) }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+                {# Génération automatique des champs pas encore écrits.
+                   Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+                   et tous les champs cachés (type « hidden »). #}
+                    {{ form_rest(form) }}
+
+                {# Fermeture de la balise <form> du formulaire HTML #}
+                </div>
+            </div>
+        </div>
+    </div>
+</form><br/>

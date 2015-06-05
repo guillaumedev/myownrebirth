@@ -1,0 +1,15 @@
+<ul>
+    {% for seed in listSeeds %}
+        <div class="col-md-3 col-sm-6">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h3>{{ seed.code }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ seed.description }}</p>
+                    <a href="{{ path('gdev_viewSeed',{'id': seed.id}) }}" class="btn btn-primary">Voir</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</ul>

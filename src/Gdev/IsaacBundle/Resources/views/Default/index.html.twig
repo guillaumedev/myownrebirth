@@ -1,0 +1,87 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+ <!-- Page Content -->
+
+        <h1 hidden class="page-header">My Own Rebirth
+                {# <small>Item Subheading</small> #} </h1>
+        <!-- /.row -->
+
+        <!-- Marketing Icons Section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Bienvenue sur MyOwnRebirth !!
+                </h1>
+            </div>
+
+             <!-- Portfolio Item Row -->
+            <div class="col-md-6">
+                 <img class="img-responsive" src="{{ asset('entrepot/') }}cover.jpg" alt="">
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gamepad"></i>MyOwnRebirth ?</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>MyOwnRebirth est LE site des fans de The Binding Of Isaac Rebirth !</p>
+                        <p>Grâce à MOR, un grand nombre de possibilités s'offrent à vous :</p>
+        {#                 <h3>Project Details</h3>#}
+                        <ul>
+                            <li>Consulter votre progression</li>
+                            <li>Consulter l'état de vos succès</li>
+                            <li>Savoir comment débloquer des succès</li>
+                            <li>Proposer des seeds</li>
+                            <li>Lancer des défis et faire le meilleur temps!</li>
+                            <li>Organiser et regarder des défis en live sur Twitch !</li>
+                            <li>Apprendre un maximum d'infos sur le jeu !</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- /.row --><br/>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-users"></i>Seeds</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Partagez vos meilleures parties ou celle où vous avez rencontrés les meilleures items (ou les pires) ! Discutez-en avec la communautée, partagez vos opinions et découvrez encore plus sur The Binding Of Isaac Rebirth !</p>
+                        <a href="{{ path('gdev_seeAllSeeds') }}" class="btn btn-default">Ca m'intéresse !</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-twitch"></i>Défis live et différés !</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Envie de montrer votre skill ? Lancez des défis à la communautée et découvrez qui sera le meilleur ! Vous pouvez aussi créer une partie live avec un timer ! Partagez la page pour montrer en direct que VOUS êtes le meilleur !</p>
+                        <a href="{{ path('gdev_seeAllTwitch') }}" class="btn btn-default">Ca m'intéresse !</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i>Succès Steam</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Vous voulez débloquer le jeu à 100 % mais cherchez continuellement comment faire ? Steam ne vous fournit pas les bonnes informations ? Connectez-vous avec votre propre compte et découvrez où vous en êtes !</p>
+                         <a href="{{ path('gdev_achievement') }}" class="btn btn-default">Ca m'intéresse !</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

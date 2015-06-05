@@ -1,0 +1,80 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "GdevIsaacBundle::layout.html.twig" %}
+
+{% block title %}
+  Defy - {{ parent() }}
+{% endblock %}
+
+{% block gdevisaac_body %}
+    <h1>Defy</h1>
+
+    <!-- /.row -->
+
+    <hr>
+
+<h3>Ajouter un defi live</h3>
+
+
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(form.firstPlayer, "Identifiant twitch du joueur 1 :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(form.firstPlayer) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(form.firstPlayer, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+    {# Idem pour un autre champ. #}
+    <div class="form-group">
+      {{ form_label(form.secondPlayer, "Identifiant twitch du joueur 2 : ", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.secondPlayer) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.secondPlayer, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+     {# Idem pour un autre champ. #}
+    <div class="form-group">
+      {{ form_label(form.seed, "Seed : ", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.seed) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.seed, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+     <div class="text-center">
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+    {# Génération automatique des champs pas encore écrits.
+       Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+       et tous les champs cachés (type « hidden »). #}
+        {{ form_rest(form) }}
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+        {{ form_end(form) }}
+    </div>
+
+
+  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+
+  {# Génération automatique des champs pas encore écrits.
+     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+     et tous les champs cachés (type « hidden »). #}
+  {{ form_rest(form) }}
+
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+</div>
+
+{% endblock %}

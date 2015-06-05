@@ -1,0 +1,15 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+{# {% extends 'MopaBootstrapBundle::base.html.twig' %} #}
+
+{% block title %}
+  Annonces - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block gdevisaac_body %}
+  {% endblock %}
+
+{% endblock %}
